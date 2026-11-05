@@ -25,6 +25,7 @@ public class Aluno {
         this.telefone = telefone;
         this.dataMatricula = LocalDateTime.now();
     }
+    
 
     public Aluno() {
 
