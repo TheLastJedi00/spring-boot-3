@@ -27,4 +27,14 @@ public class AlunoController {
     public Aluno getById(@PathVariable("id") Long id){
         return this.alunoService.getById(id);
     }
+
+    @PutMapping("/{id}")
+    public Aluno putAluno(@PathVariable("id") Long id,@RequestBody Aluno a){
+        return this.alunoService.atualizarAluno(id, a);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteAluno(@PathVariable("id") Long id){
+        this.alunoService.apagarAluno(id);
+    }
 }

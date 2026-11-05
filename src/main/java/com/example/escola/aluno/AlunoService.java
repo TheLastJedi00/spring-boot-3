@@ -34,7 +34,28 @@ public class AlunoService {
         } else {
             return null;
         }
+    }
 
+    public Aluno atualizarAluno(Long id, Aluno a) {
+        boolean hasAluno = this.alunoRepository.findById(id).isPresent();
+        if (hasAluno){
+            Aluno alunoEncontrado = this.alunoRepository.findById(id).get();
+            alunoEncontrado.setNome(a.getNome());
+            alunoEncontrado.setIdade(a.getIdade());
+            alunoEncontrado.setTelefone(a.getTelefone());
+            alunoEncontrado.setDataMatricula(a.getDataMatricula());
+            return this.alunoRepository.save(alunoEncontrado);
+        } else {
+            return null;
+        }
+    }
 
+    public void apagarAluno(Long id) {
+        boolean hasAluno = this.alunoRepository.findById(id).isPresent();
+        if(hasAluno){
+            this.alunoRepository.deleteById(id);
+        } else {
+            System.out.println("Aluno não encontrado");
+        }
     }
 }
