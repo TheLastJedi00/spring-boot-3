@@ -3,6 +3,7 @@ package com.example.escola.turmas;
 import com.example.escola.aluno.Aluno;
 import com.example.escola.aluno.AlunoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.core.support.RepositoryMethodInvocationListener;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,6 +15,8 @@ public class TurmaService {
     private TurmaRepository turmaRepository;
     @Autowired
     private AlunoService alunoService;
+    @Autowired
+    private RepositoryMethodInvocationListener repositoryMethodInvocationListener;
 
     public Turma criarTurma(TurmaDTO t){
         List<Aluno> listaAlunos = new ArrayList<>();
@@ -29,5 +32,17 @@ public class TurmaService {
 
     public List<Turma> listarTodas(){
         return this.turmaRepository.findAll();
+    }
+
+    public Turma adicionarAluno(Long idTurma, Long idAluno) {
+        boolean hasTurma = this.turmaRepository.findById(idTurma).isPresent();
+        if(hasTurma){
+            Turma t = this.turmaRepository.findById(idTurma).get();
+            Aluno a = this.alunoService.getById(idAluno);
+            t.getAlunos().add(a);
+            return this.turmaRepository.save(t);
+        } else {
+            return null;
+        }
     }
 }

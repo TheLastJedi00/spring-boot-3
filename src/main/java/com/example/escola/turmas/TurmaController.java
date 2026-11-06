@@ -20,4 +20,9 @@ public class TurmaController {
     public List<Turma> getAll(){
         return this.turmaService.listarTodas();
     }
+
+    @PutMapping("/{idTurma}")
+    public Turma adicionarAluno(@PathVariable("idTurma") Long idTurma, @RequestBody Long idAluno){
+        return this.turmaService.adicionarAluno(idTurma, idTurma);
+    }
 }
